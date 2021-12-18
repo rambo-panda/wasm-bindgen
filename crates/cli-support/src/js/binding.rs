@@ -453,8 +453,8 @@ impl<'a, 'b> JsBuilder<'a, 'b> {
             None => String::new(),
         };
         self.prelude(&format!(
-            "var ptr{i} = {f}({0}, wasm.{malloc}{realloc});",
-            val,
+            "if (typeof {params} === 'object') {params} = JSON.stringify({params}); var ptr{i} = {f}({params}, wasm.{malloc}{realloc});",
+            params = val,
             i = i,
             f = pass,
             malloc = malloc,
